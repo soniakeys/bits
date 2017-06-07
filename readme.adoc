@@ -6,7 +6,7 @@ The Bits type holds a fixed size array of bits, numbered consecutively
 from zero.  Some set-like operations are possible, but the API is more
 array-like or register-like.
 
-image::https://godoc.org/github.com/soniakeys/bits?status.svg[link=https://godoc.org/github.com/soniakeys/bits]
+image:https://godoc.org/github.com/soniakeys/bits?status.svg[link=https://godoc.org/github.com/soniakeys/bits] image:https://travis-ci.org/soniakeys/bits.svg[link=https://travis-ci.org/soniakeys/bits]
 
 == Motivation and history
 
