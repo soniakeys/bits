@@ -25,6 +25,27 @@ func ExampleNewGivens() {
 	// [0 2 63 65]
 }
 
+func ExampleBits_AllOnes() {
+	b := bits.New(5)
+	b.SetAll()
+	fmt.Println(b.AllOnes())
+	b.SetBit(2, 0)
+	fmt.Println(b.AllOnes())
+	// Output:
+	// true
+	// false
+}
+
+func ExampleBits_AllZeros() {
+	b := bits.New(5)
+	fmt.Println(b.AllZeros())
+	b.SetBit(2, 1)
+	fmt.Println(b.AllZeros())
+	// Output:
+	// true
+	// false
+}
+
 func ExampleBits_And() {
 	x := bits.NewGivens(3, 5, 6)
 	y := bits.NewGivens(4, 5, 6)
@@ -243,16 +264,6 @@ func ExampleBits_Xor() {
 	// [3 4]
 }
 
-func ExampleBits_Zero() {
-	b := bits.New(5)
-	fmt.Println(b.Zero())
-	b.SetBit(2, 1)
-	fmt.Println(b.Zero())
-	// Output:
-	// true
-	// false
-}
-
 func ExampleBits_ZeroFrom() {
 	b := bits.NewGivens(0, 63, 65, 2)
 	b.Not(b)
@@ -302,6 +313,23 @@ func TestNewGivens(t *testing.T) {
 		}
 	}()
 	bits.NewGivens(0, -1, 3)
+}
+
+func TestAllOnes(t *testing.T) {
+	// exercise early return
+	b := bits.NewGivens(63, 64)
+	b.Not(b)
+	if b.AllOnes() {
+		t.Fatal("real problem")
+	}
+}
+
+func TestAllZeros(t *testing.T) {
+	// exercise early return
+	b := bits.NewGivens(63, 64)
+	if b.AllZeros() {
+		t.Fatal("real problem")
+	}
 }
 
 func TestAnd(t *testing.T) {
@@ -552,14 +580,6 @@ func TestXor(t *testing.T) {
 		}
 	}()
 	z.Xor(z, bits.Bits{})
-}
-
-func TestZero(t *testing.T) {
-	// test early return
-	b := bits.NewGivens(63, 64)
-	if b.Zero() {
-		t.Fatal("real problem")
-	}
 }
 
 func TestZeroFrom(t *testing.T) {

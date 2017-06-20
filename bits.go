@@ -56,6 +56,28 @@ func NewGivens(nums ...int) Bits {
 	return b
 }
 
+// AllOnes returns true if all Num bits are 1.
+func (b Bits) AllOnes() bool {
+	last := len(b.Bits) - 1
+	for _, w := range b.Bits[:last] {
+		if w != ^uint64(0) {
+			return false
+		}
+	}
+	return ^b.Bits[last]<<uint(64*len(b.Bits)-b.Num) == 0
+}
+
+// AllZeros returns true if all Num bits are 0.
+func (b Bits) AllZeros() bool {
+	last := len(b.Bits) - 1
+	for _, w := range b.Bits[:last] {
+		if w != 0 {
+			return false
+		}
+	}
+	return b.Bits[last]<<uint(64*len(b.Bits)-b.Num) == 0
+}
+
 // And sets z = x & y.
 //
 // It panics if x and y do not have the same Num.
@@ -396,17 +418,6 @@ func (z *Bits) Xor(x, y Bits) {
 	for i, w := range y.Bits {
 		z.Bits[i] = x.Bits[i] ^ w
 	}
-}
-
-// Zero returns true if all Num bits are 0.
-func (b Bits) Zero() bool {
-	last := len(b.Bits) - 1
-	for _, w := range b.Bits[:last] {
-		if w != 0 {
-			return false
-		}
-	}
-	return b.Bits[last]<<uint(64*len(b.Bits)-b.Num) == 0
 }
 
 // ZeroFrom returns the number of the first 0 bit at or after (from) bit num.
